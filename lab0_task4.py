@@ -21,6 +21,7 @@ for file_index in range(1, 18):
         elif(float(bests_texts_array[i][0]) == float(bests_texts_array[min_str[0]][0])):
             min_str.append(i)
 
+
     print()
     print('detectSingleXor' + '{0:0>2}'.format(str(file_index)) + ':')
     print(' Right:')
