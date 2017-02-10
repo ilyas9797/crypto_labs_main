@@ -89,7 +89,7 @@ def convert_to_base64(s):
             out += convert_binstr_in_base64str(tmp_str, 2) + '=='
         return out
 
-s1 = 'faea8766efd8b295a633908a3c0828b22640e1e9122c3c9cfb7b59b7cf3c9d448bf04d72cde3aaa0'
+s1 = '010101'
 s2 = s1 + '6d'
 s3 = s2 + '7e'
 print('input')

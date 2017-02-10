@@ -3,12 +3,12 @@
 def make_hex_line(s):
     # создание byte-line для строки s
     #data = s.encode('utf-8')
-    data = bytes(s, 'utf-8')
-    if (len(data) % 2 != 0):
-        data = data + b'0'
+    #s = bytes(s, 'utf-8')
+    if (len(s) % 2 != 0):
+        s = s + '0'
     import binascii
     # преобразование byte-line в шестнадцатеричное представление массива байт
-    h = binascii.a2b_hex(data)
+    h = binascii.a2b_hex(s)
     return h
 
 #вход: бинарная строка h содержащая символы из ASCII
