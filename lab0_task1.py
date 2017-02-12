@@ -35,7 +35,8 @@ def convert_hexstr_in_binstr(s):
         #заполнение num_str с 3его по 1ый байты кодами jых элементов в строке tmp_str
         num_str += (tmp_char_code << (2 - j) * 8)
     #преобразование числа num_str в строку длинны 24, где каждые 8 символов соответствуют двоичному представлению 2 символов hex-представления из строки s
-    bin_str = '0' * (24 - len(bin(num_str)[2:])) + bin(num_str)[2:]
+    #bin_str = '0' * (24 - len(bin(num_str)[2:])) + bin(num_str)[2:]
+    bin_str = '{0:0>24}'.format(bin(num_str)[2:])
     return bin_str
 
 #вход: bin число в строковом формате длинны 24

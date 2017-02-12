@@ -74,11 +74,80 @@ def make_one_byte_XOR(enc_str):
     theor_freq_array = [8.167, 1.492, 2.782, 4.253, 12.702, 2.228, 2.015, 6.094, 6.966, 0.153, 0.772, 4.025, 2.406,
                         6.749, 7.507, 1.929, 0.095, 5.987, 6.327, 9.056, 2.758, 0.978, 2.360, 0.150, 1.974, 0.074]
 
+    min_list = [[float(100), '']]
+
+    out_list = []
+
+    for letter in range(256):
+        letter_str = '{0:0>2}'.format(str(hex(letter)[ 2 : ])) * int(len(enc_str) / 2)
+        result_str = my_xor(enc_str, letter_str)
+
+        alphapet_letters_amount = int(0)
+        result_str_only_alphabet = ''
+
+        import re
+
+        result_str_str = hex_to_str(result_str)
+
+        p = re.compile('[A-Za-z]+')
+        m = p.findall(result_str_str)
+
+        for i in range(int(len(m))):
+            alphapet_letters_amount += int(len(m[i]))
+            result_str_only_alphabet += str(m[i])
+
+        # сравнение каждого символа строки с выбранной буквой
+        if (int(alphapet_letters_amount) != 0):
+
+            delta = float(0)
+
+            min_delta = int(0)
+
+            # выбор буквы из алфавита
+            for i_in_alphabet in range(65, 91):
+                # сравнение каждого символа строки с выбранной буквой
+                p = re.compile('[' + chr(i_in_alphabet) + chr(i_in_alphabet + 32) + ']')
+                letter_amount_up = int(len(p.findall(result_str_only_alphabet)))
+
+                delta += float(
+                    abs(theor_freq_array[i_in_alphabet - 65] / 100 - letter_amount_up / alphapet_letters_amount))
+
+            if (delta < min_list[0][0]):
+                min_list.clear()
+                #для 4 задания
+                #min_list.append([float(delta), result_str_str])
+
+                #для 6 задания
+                min_list.append([float(delta), result_str])
+
+            elif(delta == min_list[0][0]):
+                #для 4 задания
+                #min_list.append([float(delta), result_str_str])
+
+                # для 6 задания
+                min_list.append([float(delta), result_str])
+
+
+
+
+
+    '''
+    if (int(len(str_list)) != 0):
+        min_up = int(0)
+        for i in range(int(len(str_list))):
+            if (str_list[i][0] < str_list[min_up][0]):
+                min_up = i
+        out_list.append(str_list[min_up])
+    '''
+
+    '''
     #A-Z: 41h-5ah(65-90)
     #a-z: 61h-7ah(97-122)
     upper_str_list = []
     lower_str_list = []
+
     for letter in range(65, 91):
+
         letter_str_up = str(hex(letter)[ 2 : ]) * int(len(enc_str) / 2)
         result_str_up = my_xor(enc_str, letter_str_up)
 
@@ -95,22 +164,23 @@ def make_one_byte_XOR(enc_str):
         alphapet_letters_amount_low = int(0)
         result_str_low_only_alphabet = ''
         #print(hex_to_str(result_str_low))
-        #'''
-        for i in range(int(len(enc_str) / 2)):
-            if ((int(result_str_up[i * 2: i * 2 + 2:], 16) >= 65 and int(result_str_up[i * 2: i * 2 + 2:],
-                                                                         16) <= 90) or (
-                    int(result_str_up[i * 2: i * 2 + 2:], 16) >= 97 and int(result_str_up[i * 2: i * 2 + 2:],
-                                                                            16) <= 122)):
-                alphapet_letters_amount_up += 1
-                result_str_up_only_alphabet += result_str_up[i * 2: i * 2 + 2:]
-            if ((int(result_str_low[i * 2: i * 2 + 2:], 16) >= 65 and int(result_str_low[i * 2: i * 2 + 2:],
-                                                                         16) <= 90) or (
-                    int(result_str_low[i * 2: i * 2 + 2:], 16) >= 97 and int(result_str_low[i * 2: i * 2 + 2:],
-                                                                            16) <= 122)):
-                alphapet_letters_amount_low += 1
-                result_str_low_only_alphabet += result_str_low[i * 2: i * 2 + 2:]
 
-        #'''
+        import re
+
+        result_str_up_str = hex_to_str(result_str_up)
+        result_str_low_str = hex_to_str(result_str_low)
+
+        p = re.compile('[A-Za-z]+')
+        m_up = p.findall(result_str_up_str)
+        m_low = p.findall(result_str_low_str)
+
+        for i in range(int(len(m_up))):
+            alphapet_letters_amount_up += int(len(m_up[i]))
+            result_str_up_only_alphabet += str(m_up[i])
+        for j in range(int(len(m_low))):
+            alphapet_letters_amount_low += int(len(m_low[j]))
+            result_str_low_only_alphabet += str(m_low[j])
+
 
         # сравнение каждого символа строки с выбранной заглавной буквой
         if(int(alphapet_letters_amount_up) != 0):
@@ -120,15 +190,15 @@ def make_one_byte_XOR(enc_str):
 
             #выбор буквы из алфавита
             for i_in_alphabet in range(65, 91):
-                letter_amount_up = int(0)
 
                 #сравнение каждого символа строки с выбранной буквой
-                letter_amount_up = int(str(hex_to_str(result_str_up_only_alphabet)).count(chr(i_in_alphabet))) + int(
-                    str(hex_to_str(result_str_up_only_alphabet)).count(chr(i_in_alphabet + 32)))
+                p = re.compile('[' + chr(i_in_alphabet) + chr(i_in_alphabet + 32) + ']')
+                letter_amount_up = int(len(p.findall(result_str_up_only_alphabet)))
 
-                delta_up += float(abs(theor_freq_array[i_in_alphabet - 65] / 100 - letter_amount_up / alphapet_letters_amount_up))
+                delta_up += float(
+                    abs(theor_freq_array[i_in_alphabet - 65] / 100 - letter_amount_up / alphapet_letters_amount_up))
 
-            upper_str_list.append([float(delta_up), result_str_up])
+            upper_str_list.append([float(delta_up), result_str_up_str])
 
         # сравнение каждого символа строки с выбранной прописной буквой
         if(int(alphapet_letters_amount_low) != 0):
@@ -136,16 +206,15 @@ def make_one_byte_XOR(enc_str):
 
             # выбор буквы из алфавита
             for i_in_alphabet in range(65, 91):
-                letter_amount_low = int(0)
 
                 # сравнение каждого символа строки с выбранной буквой
-                letter_amount_low = int(str(hex_to_str(result_str_low_only_alphabet)).count(chr(i_in_alphabet))) + int(
-                    str(hex_to_str(result_str_low_only_alphabet)).count(chr(i_in_alphabet + 32)))
+                p = re.compile('[' + chr(i_in_alphabet) + chr(i_in_alphabet + 32) + ']')
+                letter_amount_low = int(len(p.findall(result_str_low_only_alphabet)))
 
                 delta_low += float(
                     abs(theor_freq_array[i_in_alphabet - 65] / 100 - letter_amount_low / alphapet_letters_amount_low))
 
-            lower_str_list.append([float(delta_low), result_str_low])
+            lower_str_list.append([float(delta_low), result_str_low_str])
 
     out_list = []
 
@@ -162,15 +231,16 @@ def make_one_byte_XOR(enc_str):
             if (lower_str_list[j][0] < lower_str_list[min_low][0]):
                 min_low = j
         out_list.append(lower_str_list[min_low])
-    return out_list
+        '''
+    return min_list
 
 '''
 s = '041811045013111e5003110615501815025000151f001c1550111e1450021503041f0215'
 res = make_one_byte_XOR(s)
 print()
 print()
-print(hex_to_str(res[0][1]))
-print(hex_to_str(res[1][1]))
+print(res[0][1])
+print(res[1][1])
 '''
 
 

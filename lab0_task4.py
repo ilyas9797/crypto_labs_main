@@ -1,5 +1,4 @@
 import lab0_task3
-# 04,
 
 for file_index in range(1, 18):
     encrypt_file = open('detectSingleXor' + '{0:0>2}'.format(str(file_index)))
@@ -26,6 +25,6 @@ for file_index in range(1, 18):
     print('detectSingleXor' + '{0:0>2}'.format(str(file_index)) + ':')
     print(' Right:')
     for i in range(int(len(min_str))):
-        print('   ' + lab0_task3.hex_to_str(bests_texts_array[min_str[i]][1]))
+        print('   ' + bests_texts_array[min_str[i]][1])
 
 
