@@ -4,26 +4,20 @@ with open('decryptAesEcb.txt') as f:
     decrypt_aes_ecb_base64 = sub(r'\n', '', f.read())
 f.close()
 
-from binascii import b2a_hex, a2b_base64
+from binascii import a2b_base64
 
 decrypt_aes_ecb_str = a2b_base64(decrypt_aes_ecb_base64)
 
-key = b'YELLOW SUBMARINE'
+with open('encrypted.txt', 'wb') as f1:
+    f1.write(decrypt_aes_ecb_str)
+f1.close()
 
-#include pyCrypto
-from Crypto.Cipher import AES
+password = b'YELLOW SUBMARINE'
+with open('password.txt', 'wb') as f2:
+    f2.write(password)
+f2.close()
 
-#инициализирующий вектор не нужен, так как использутся AES_ECB
-cipher = AES.new(key, AES.MODE_ECB)
-
-encrypt_aes_ecb_str = cipher.decrypt(decrypt_aes_ecb_str)
-
-print(encrypt_aes_ecb_str)
-print()
-
-s = ''
-for i in range(len(encrypt_aes_ecb_str)):
-    s += chr(encrypt_aes_ecb_str[i])
-
-print(s)
+#openssl enc -d -aes-128-ecb -salt -in encrypted.txt -out decrypted.txt -pass file:password.txt
+import subprocess
+subprocess.call(['openssl', 'enc', '-d', '-aes-128-ecb', '-salt', '-in', 'encrypted.txt', '-out', 'decrypted.txt', '-pass', 'file:password.txt'])
 

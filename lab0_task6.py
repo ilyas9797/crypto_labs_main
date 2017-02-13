@@ -41,7 +41,8 @@ for k in range(2, 41):
 
     str_for_k_list = []
     for j in range(len(k_key_list)):
-        xored_str = lab0_task3.make_one_byte_XOR(k_key_list[j])[0][1]
+        o = lab0_task3.make_one_byte_XOR(k_key_list[j])
+        xored_str = o[len(o) - 1][1]
         xored_str_bin = binascii.a2b_hex(xored_str)
         xored_str = ''
         for m in xored_str_bin:
