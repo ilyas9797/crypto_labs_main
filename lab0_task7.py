@@ -21,3 +21,4 @@ f2.close()
 import subprocess
 subprocess.call(['openssl', 'enc', '-d', '-aes-128-ecb', '-salt', '-in', 'encrypted.txt', '-out', 'decrypted.txt', '-pass', 'file:password.txt'])
 
+
