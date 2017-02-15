@@ -1,6 +1,6 @@
 from re import sub
 
-with open('decryptAesEcb.txt') as f:
+with open('decryptAesEcb.txt') as f:#/home/ilyas/PycharmProjects/labs/lab0/decryptAesEcb.txt
     decrypt_aes_ecb_base64 = sub(r'\n', '', f.read())
 f.close()
 

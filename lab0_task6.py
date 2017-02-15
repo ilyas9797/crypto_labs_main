@@ -1,6 +1,7 @@
 import binascii
 import  re
-import  lab0_task3
+
+import lab0_task3
 
 file = open('breakRepeatedKeyXor.txt')
 str_from_file = str(file.read())
