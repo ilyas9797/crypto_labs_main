@@ -111,4 +111,16 @@ else:
     print('YES')
 '''
 
+width = input()
+height = input()
+x0 = input()
+y0 = input()
+rX = input()
+rY = input()
+
+from math import cos, sin, pi
+
+a = float(rX / cos(0))
+b = float(rY / sin(pi / 2))
+
 
