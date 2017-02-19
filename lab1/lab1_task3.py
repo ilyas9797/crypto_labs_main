@@ -3,6 +3,8 @@ from Crypto.Cipher import AES
 from lab1.lab1_task1_task2 import padding_str, checking_padding
 import re
 
+#вход: три байт-строки
+#выход: байт-строка, полученная в результате соединения входных строк в соответсвующем порядке(причем, из средней удалены символы ; и =
 def padding_begin_and_end(input_str, begin_str, end_str):
 
     if type(input_str) == bytes and type(begin_str) == bytes and type(end_str) == bytes:
@@ -16,6 +18,8 @@ def padding_begin_and_end(input_str, begin_str, end_str):
 
             return begin_str + s_sub.encode() + end_str
 
+#вход: исходная, зашифрованная, желаемая байт-строки и смещение относительно исходной строки, где мы хотим увидеть желаемую подстроку
+#выход: зашифрованная байт-строка модифицированная таким образом, что при ее расшифровке мы обнаружим желаемую подстроку
 def modifying_encrypted_str(plain_str, enc_str, repl_str, shift):
 
     if type(plain_str) == bytes and type(enc_str) == bytes and type(repl_str) == bytes:
@@ -28,6 +32,8 @@ def modifying_encrypted_str(plain_str, enc_str, repl_str, shift):
 
             return bytes(enc_modified)
 
+#вход: зашифрованная, модифицированная, желаемая байт-строки, смещение, и AES-объект
+#выход: расшифрованная байт-строка с желаемой подстрокой, записанной с позиции равной смещению
 def decrypting_and_searching_repl(enc_str, enc_modified_str, repl_str, shift, cipher):
 
     if type(enc_str) == bytes and type(enc_modified_str) == bytes and type(repl_str) == bytes:
@@ -40,7 +46,46 @@ def decrypting_and_searching_repl(enc_str, enc_modified_str, repl_str, shift, ci
             dec_str += cipher.decrypt(enc_tmp)[AES.block_size: 2 * AES.block_size:]
 
         if dec_str[shift: shift + len(repl_str):] == repl_str:
-            return True
+            return True, dec_str
+
+'''
+begin_str = b'comment1=cooking%20MCs;userdata='
+end_str = b';comment2=%20like%20a%20pound%20of%20bacon'
+
+print('Enter string:')
+while True:
+    s = str(input())
+    if len(s) != 0:
+        break
+    print('Enter string again:')
+
+str_to_encrypt = padding_begin_and_end(s.encode(),begin_str,end_str)
+
+#случайная генерация ключа
+key = Random.new().read(AES.key_size[0])
+print('key = ', key)
+
+#инициализирующий вектор заполненный нулями
+iv = b'\x00' * AES.block_size
+
+cipher = AES.new(key, AES.MODE_CBC, iv)
+
+#заполнение исходной строки по стандарту PKCS7
+p_s = padding_str(str_to_encrypt, AES.block_size)
+
+enc = iv + cipher.encrypt(p_s)
+
+wanted_text = b'admin=true'
+
+shift = 7
+
+enc_modified = modifying_encrypted_str(str_to_encrypt, enc, wanted_text, shift)
+
+indicator, dec = decrypting_and_searching_repl(enc, enc_modified, wanted_text, shift, cipher)
+if indicator == True:
+    print(checking_padding(dec))
+'''
+
 
 
 

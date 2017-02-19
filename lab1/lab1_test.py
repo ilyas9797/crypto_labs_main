@@ -1,5 +1,8 @@
 from Crypto.Random.random import getrandbits
 
-s = getrandbits(300000)
+def x(x, y):
+    return True, x-y
 
-print(type(s))
+zm = x(5, 7)
+
+print(zm)

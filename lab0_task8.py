@@ -4,7 +4,6 @@ f.close()
 
 from binascii import a2b_hex
 
-
 bin_lines_list = [a2b_hex(x) for x in file_lines_list]
 
 lines_list = []
@@ -13,8 +12,6 @@ for i in range(len(bin_lines_list) - 1):
     lines_list.append('')
     for j in range(len(bin_lines_list[i])):
         lines_list[i] += chr(bin_lines_list[i][j])
-
-
 
 for k in lines_list:
     list_i_matchings = []
