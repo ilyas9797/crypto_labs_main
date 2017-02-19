@@ -46,7 +46,7 @@ def decrypting_and_searching_repl(enc_str, enc_modified_str, repl_str, shift, ci
             dec_str += cipher.decrypt(enc_tmp)[AES.block_size: 2 * AES.block_size:]
 
         if dec_str[shift: shift + len(repl_str):] == repl_str:
-            return True, dec_str
+            return dec_str
 
 '''
 begin_str = b'comment1=cooking%20MCs;userdata='
@@ -77,12 +77,12 @@ enc = iv + cipher.encrypt(p_s)
 
 wanted_text = b'admin=true'
 
-shift = 7
+shift = 0
 
 enc_modified = modifying_encrypted_str(str_to_encrypt, enc, wanted_text, shift)
 
-indicator, dec = decrypting_and_searching_repl(enc, enc_modified, wanted_text, shift, cipher)
-if indicator == True:
+dec = decrypting_and_searching_repl(enc, enc_modified, wanted_text, shift, cipher)
+if dec != None:
     print(checking_padding(dec))
 '''
 
