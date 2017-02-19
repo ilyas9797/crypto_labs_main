@@ -1,3 +1,5 @@
-from Crypto.Cipher import AES
-print(AES.key_size[0])
-print(bytes == type(b'qwe'))
+from Crypto.Random.random import getrandbits
+
+s = getrandbits(300000)
+
+print(type(s))
