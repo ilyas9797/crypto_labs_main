@@ -65,32 +65,32 @@ def convert_binstr_in_base64str(bin_str, power):
 def convert_to_base64(s):
     #длина байтовой строки должна быть четной, т.к. на один байт приходится 2 элемента строки
     if(len(s) % 2 != 0):
-        return None
-    else:
-        out = ''
-        #количество блоков длинны 6 в строке s
-        iter_amount = int((len(s) / 2) // 3)
-        last_iter = int((len(s) / 2) % 3)
+        s += '0'
+        #return None
+    out = ''
+    #количество блоков длинны 6 в строке s
+    iter_amount = int((len(s) / 2) // 3)
+    last_iter = int((len(s) / 2) % 3)
 
-        #на каждой итерации преобразуются следующие 6 элементов строки s
-        for i in range(iter_amount):
-            #преобразование hex числа записанного в формате строки в bin число записанное в формате строки tmp_str
-            tmp_str = convert_hexstr_in_binstr(s[i * 6:i * 6 + 6:])
-            #преобразование bin числа записанного в формате строки tmp_str в строку в формате base64 длинны 4
-            out += convert_binstr_in_base64str(tmp_str, 0)
+    #на каждой итерации преобразуются следующие 6 элементов строки s
+    for i in range(iter_amount):
+        #преобразование hex числа записанного в формате строки в bin число записанное в формате строки tmp_str
+        tmp_str = convert_hexstr_in_binstr(s[i * 6:i * 6 + 6:])
+        #преобразование bin числа записанного в формате строки tmp_str в строку в формате base64 длинны 4
+        out += convert_binstr_in_base64str(tmp_str, 0)
 
-        #случай если в конце остались 2 необработанных байта
-        if(last_iter == 2):
-            tmp_str = convert_hexstr_in_binstr(s[(iter_amount - 1) * 6 + 6:] + '0' * 2)
-            out += convert_binstr_in_base64str(tmp_str, 1) + '='
+    #случай если в конце остались 2 необработанных байта
+    if(last_iter == 2):
+        tmp_str = convert_hexstr_in_binstr(s[(iter_amount - 1) * 6 + 6:] + '0' * 2)
+        out += convert_binstr_in_base64str(tmp_str, 1) + '='
 
-        #случай если в конце остались 1 необработанный байт
-        elif(last_iter == 1):
-            tmp_str = convert_hexstr_in_binstr(s[(iter_amount - 1) * 6 + 6:] + '0' * 4)
-            out += convert_binstr_in_base64str(tmp_str, 2) + '=='
-        return out
+    #случай если в конце остались 1 необработанный байт
+    elif(last_iter == 1):
+        tmp_str = convert_hexstr_in_binstr(s[(iter_amount - 1) * 6 + 6:] + '0' * 4)
+        out += convert_binstr_in_base64str(tmp_str, 2) + '=='
+    return out
 
-s1 = '010101'
+s1 = '000'
 s2 = s1 + '6d'
 s3 = s2 + '7e'
 print('input')

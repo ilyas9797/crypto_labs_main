@@ -50,15 +50,6 @@ for k in range(2, 41):
             xored_str += chr(m)
         str_for_k_list.append(xored_str)
 
-
-    '''
-    str_for_k_list = []
-    for i in range(len(k_key_list)):
-        s2 = ''
-        for i in binascii.a2b_hex((lab0_task3.make_one_byte_XOR(k_key_list[i])[0][1]).encode()):
-            s2 += chr(i)
-        str_for_k_list.append(s)
-    '''
     str_for_k = ''
     j = 0
     for n in range(str_from_file_len):

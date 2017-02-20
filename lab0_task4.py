@@ -1,8 +1,11 @@
 import lab0_task3
+from binascii import a2b_hex
 
+#поиск зашифрованной строки в каждом файле
 for file_index in range(1, 18):
     encrypt_file = open('detectSingleXor' + '{0:0>2}'.format(str(file_index)))
 
+    #список содержащий наиболее вероятную расшифровку для каждой строки в файле
     bests_texts_array = []
 
     # выбираем для каждой строки файла наиболее правдоподобную расшифровку
@@ -12,6 +15,7 @@ for file_index in range(1, 18):
         for i in range(int(len(file_str_list))):
             bests_texts_array.append(file_str_list[i])
 
+    #список с индексами массива bests_texts_array, у которых наименьшая дельта
     min_str = [0]
     for i in range(int(len(bests_texts_array))):
         if(float(bests_texts_array[i][0]) < float(bests_texts_array[min_str[0]][0])):
@@ -25,6 +29,6 @@ for file_index in range(1, 18):
     print('detectSingleXor' + '{0:0>2}'.format(str(file_index)) + ':')
     print(' Right:')
     for i in range(int(len(min_str))):
-        print('   ' + bests_texts_array[min_str[i]][1])
+        print(a2b_hex(str(bests_texts_array[min_str[i]][1]).encode()))
 
 
