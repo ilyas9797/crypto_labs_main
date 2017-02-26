@@ -39,10 +39,11 @@ def my_xor(s1, s2):
         outs = make_str_line(h)
         return outs
 
-
+'''
 #8f29336f5e9af0919634f474d248addaf89f6e1f533752f52de2dae0ec3185f818c0892fdc873a69
 #bf7962a3c4e6313b134229e31c0219767ff59b88584a303010ab83650a3b1763e5b314c2f1e2f166
 #305051cc9a7cc1aa8576dd97ce4ab4ac876af5970b7d62c53d495985e60a929bfd739ded2d65cb0f
-#s1 = input()
-#s2 = input()
-#print(my_xor(s1, s2))
+s1 = input()
+s2 = input()
+print(my_xor(s1, s2))
+'''

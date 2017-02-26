@@ -65,8 +65,8 @@ def convert_binstr_in_base64str(bin_str, power):
 def convert_to_base64(s):
     #длина байтовой строки должна быть четной, т.к. на один байт приходится 2 элемента строки
     if(len(s) % 2 != 0):
-        s += '0'
-        #return None
+        #s += '0'
+        return None
     out = ''
     #количество блоков длинны 6 в строке s
     iter_amount = int((len(s) / 2) // 3)
@@ -89,8 +89,8 @@ def convert_to_base64(s):
         tmp_str = convert_hexstr_in_binstr(s[(iter_amount - 1) * 6 + 6:] + '0' * 4)
         out += convert_binstr_in_base64str(tmp_str, 2) + '=='
     return out
-
-s1 = '000'
+'''
+s1 = '0000'
 s2 = s1 + '6d'
 s3 = s2 + '7e'
 print('input')
@@ -98,6 +98,7 @@ print(s1)
 print()
 b = convert_to_base64(s1)
 print(b)
+'''
 
 #обратное преобразование--------------------------------------------------------------------------------------------------------
 
@@ -132,6 +133,14 @@ def convert_binstr_in_hexstr(bin_str, power):
 def convert_from_base64(s):
     if(len(s) % 4 != 0):
         return None
+    import re
+    p = re.compile('\\=')
+    l = len(p.findall(s))
+    if l > 2:
+        return None
+    for k in range(l):
+        if s[-1 - k] != '=':
+            return None
     else:
         out = ''
         if(len(s) != 0):
@@ -153,6 +162,7 @@ def convert_from_base64(s):
                 out += convert_binstr_in_hexstr(tmp_str, 2)
     return out
 
+b = '00bb'
 s_out = convert_from_base64(b)
 print(s_out)
 

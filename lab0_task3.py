@@ -17,7 +17,7 @@ def make_one_byte_XOR(enc_str):
                         6.749, 7.507, 1.929, 0.095, 5.987, 6.327, 9.056, 2.758, 0.978, 2.360, 0.150, 1.974, 0.074]
 
     #возвращаемая переменная, мы можем быть уверены, что значение дельты будет меньше 10 процентов
-    min_list = [[float(100), '']]
+    min_list = [[float(100), '', 0]]
 
     #перебор всевозможных символов, с помощью которых мы пытаемся расшифровать входную строку
     for letter in range(256):
@@ -57,22 +57,53 @@ def make_one_byte_XOR(enc_str):
 
             if (delta < min_list[0][0]):
                 min_list.clear()
-                min_list.append([float(delta), result_str])
+                min_list.append([float(delta), result_str, letter])
 
             elif(delta == min_list[0][0]):
-                min_list.append([float(delta), result_str])
+                min_list.append([float(delta), result_str, letter])
 
 
     return min_list
 
-'''
+from binascii import a2b_hex, b2a_hex
+
 s = '041811045013111e5003110615501815025000151f001c1550111e1450021503041f0215'
 res = make_one_byte_XOR(s)
 print()
 print()
-print(res[0][1])
-print(res[1][1])
-'''
+print('key:', chr(res[0][2]))
+print(a2b_hex(res[0][1]))
+print('key:', chr(res[1][2]))
+print(a2b_hex(res[1][1]))
+
+s = ''
+
+key = 'p'
+
+for i in range(len(a2b_hex(res[1][1]))):
+    tmp = (a2b_hex(res[1][1]).decode())[i]
+    if tmp == 'e' or tmp == 'E':
+        #s += 'z'
+        s += b2a_hex(chr('z'.encode()[0] ^ key.encode()[0]).encode()).decode()
+    elif tmp == 'z' or tmp == 'Z':
+        #s+= 'e'
+        s += b2a_hex(chr('e'.encode()[0] ^ key.encode()[0]).encode()).decode()
+    else:
+        #s+=tmp
+        k = tmp.encode()[0] ^ key.encode()[0]
+        s += b2a_hex(chr(tmp.encode()[0] ^ key.encode()[0]).encode()).decode()
+
+print(s)
+
+
+res = make_one_byte_XOR(s)
+print('key:', chr(res[0][2]))
+print(a2b_hex(res[0][1]))
+print('key:', chr(res[1][2]))
+print(a2b_hex(res[1][1]))
+
+
+
 
 
 

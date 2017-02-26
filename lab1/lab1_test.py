@@ -1,8 +1,5 @@
 from Crypto.Random.random import getrandbits
 
-def x(x, y):
-    return True, x-y
+s = b'qwerty'
 
-zm = x(5, 7)
-
-print(zm)
+print(''.join(chr(x) for x in s))
