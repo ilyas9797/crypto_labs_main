@@ -31,11 +31,11 @@ def encryption_oracle(input_str):
         encrypted_text = cipher.encrypt(plain_text)
     else:
         encrypted_text = iv + cipher.encrypt(plain_text)
-    return cipher.mode, plain_text , encrypted_text, cipher
+    return cipher.mode, plain_text , encrypted_text
 
 
 
-
+'''
 m, plain_text, unknown_mode_encrypted_str, cipher = encryption_oracle(b'tested_string')
 if len(unknown_mode_encrypted_str) > 16:
     test_change = Random.new().read(AES.block_size)
@@ -45,5 +45,20 @@ if len(unknown_mode_encrypted_str) > 16:
         print('detected CBC')
     else:
         print('detected ECB')
+else:
+    print('detected ECB')
+'''
+
+used_mode, plain_text, unknown_mode_encrypted_str = encryption_oracle(b'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
+
+if len(unknown_mode_encrypted_str) > 16:
+    for pos in range(0, len(unknown_mode_encrypted_str) // AES.block_size - 1):
+        if unknown_mode_encrypted_str[pos * AES.block_size: AES.block_size + pos * AES.block_size] in \
+                unknown_mode_encrypted_str[AES.block_size + pos * AES.block_size:]:
+            print('detected ECB')
+            break
+    else:
+        print('detected CBC')
+
 else:
     print('detected ECB')
