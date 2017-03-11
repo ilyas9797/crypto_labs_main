@@ -9,8 +9,8 @@ def make_aes_128_ecb(plain_text, key):
 
     return cipher.encrypt(plain_text)
 
-'''
 
+'''
 unknownStrBase64 = 'Um9sbGluJyBpbiBteSA1LjAKV2l0aCBteSByYWctdG9wIGRvd24gc28gbXkgaGFpciBjYW4gYmxvdwpUaGUgZ2lybGllcy' \
                    'BvbiBzdGFuZGJ5IHdhdmluZyBqdXN0IHRvIHNheSBoaQpEaWQgeW91IHN0b3A/IE5vLCBJIGp1c3QgZHJvdmUgYnkK'
 

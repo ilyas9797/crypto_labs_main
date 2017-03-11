@@ -11,8 +11,8 @@ def padding_str(s, k):
         outs = b_s + (chr(mod) * mod).encode()
         return outs
 '''
-s = 'YELLOW SUBMARINE'
-s1 = padding_str(s, 20)
+s = '12345678901'
+s1 = padding_str(s, 11)
 print(s1)
 s1 = 'ICE ICE BABY\x05\x05\x05\x05\x05'
 '''
