@@ -10,6 +10,6 @@ key = b'YELLOW SUBMARINE'
 
 cipher = AES.new(key, AES.MODE_CTR, counter=ctr)
 
-decrypted_str = cipher.decrypt(unknown_str)
+decrypted_str = cipher.decrypt(unknown_str).decode()
 
 print(decrypted_str)
