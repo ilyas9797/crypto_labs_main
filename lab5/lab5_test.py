@@ -1,8 +1,16 @@
 from math import sqrt, floor
+from binascii import a2b_hex
 
-x = sqrt(81)
+import hashlib
 
-print(x, type(x) , x - floor(x))
+n = 23454565
 
-if 0 == x - floor(x):
-    print('xyi')
+b = hex(n)[2:].encode()
+b += b'0' if len(b) % 2 != 0 else b''
+h = a2b_hex(b)
+
+
+
+print(h)
+
+print(type(hashlib.sha1(h)), type(hashlib.sha1(h).hexdigest()))

@@ -14,14 +14,18 @@ def padding_str(s, k):
 s = '12345678901'
 s1 = padding_str(s, 11)
 print(s1)
-s1 = 'ICE ICE BABY\x05\x05\x05\x05\x05'
+
 '''
-def checking_padding(p_s):
+#s1 = 'ICE ICE BABY\x05\x05\x05\x00'
+
+def checking_padding(p_s) -> bytes:
     if p_s != None and len(p_s) > 1:
         if type(p_s) != bytes:
             b_p_s = p_s.encode()
         else:
             b_p_s = p_s
+        if b_p_s[-1] == 0:
+            return None
         lenght = len(b_p_s)
         p_sym = b_p_s[lenght - 1]
         if b_p_s[lenght - int(p_sym): ] == (chr(p_sym) * int(p_sym)).encode():
