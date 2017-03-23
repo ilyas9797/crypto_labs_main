@@ -2,7 +2,7 @@ from lab1.lab1_task1_task2 import padding_str, checking_padding
 from Crypto.Cipher import AES
 from Crypto import Random
 from Crypto.Random.random import randint
-from binascii import a2b_base64, b2a_base64
+from binascii import a2b_base64
 
 #ключ шифрования
 key = None
